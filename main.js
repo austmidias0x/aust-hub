@@ -30,6 +30,6 @@ form?.addEventListener('submit', async (event) => {
   } catch {
     status.textContent = 'Não foi possível enviar agora. Tente novamente em alguns instantes.'; status.style.color = 'var(--red-light)';
   } finally {
-    button.disabled = false; button.innerHTML = 'Enviar para a Aust <span>↗</span>';
+    button.disabled = false; button.textContent = 'Enviar para a Aust';
   }
 });
