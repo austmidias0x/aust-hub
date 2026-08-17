@@ -26,10 +26,10 @@ form?.addEventListener('submit', async (event) => {
     const body = new URLSearchParams(new FormData(form));
     const response = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
     if (!response.ok) throw new Error('Falha no envio');
-    form.reset(); status.textContent = 'Contexto enviado. A equipe da Aust entrará em contato.';
+    form.reset(); status.textContent = 'Recebemos a sua mensagem. A equipe da Aust entrará em contato.';
   } catch {
     status.textContent = 'Não foi possível enviar agora. Tente novamente em alguns instantes.'; status.style.color = 'var(--red-light)';
   } finally {
-    button.disabled = false; button.innerHTML = 'Enviar contexto <span>↗</span>';
+    button.disabled = false; button.innerHTML = 'Enviar para a Aust <span>↗</span>';
   }
 });
