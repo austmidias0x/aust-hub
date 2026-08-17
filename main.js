@@ -1,3 +1,5 @@
+if (!window.__austSiteInitialized) {
+window.__austSiteInitialized = true;
 document.documentElement.classList.add('js');
 const menuButton = document.querySelector('.menu-button');
 const mobileMenu = document.querySelector('.mobile-menu');
@@ -33,3 +35,39 @@ form?.addEventListener('submit', async (event) => {
     button.disabled = false; button.textContent = 'Enviar para a Aust';
   }
 });
+
+let dialogTrigger = null;
+const dialogs = document.querySelectorAll('.story-dialog');
+
+document.querySelectorAll('[data-modal]').forEach((trigger) => {
+  trigger.addEventListener('click', () => {
+    const dialog = document.getElementById(trigger.dataset.modal);
+    if (!(dialog instanceof HTMLDialogElement)) return;
+    dialogTrigger = trigger;
+    document.body.classList.add('dialog-open');
+    dialog.showModal();
+    dialog.querySelector('.dialog-close')?.focus();
+  });
+});
+
+dialogs.forEach((dialog) => {
+  dialog.addEventListener('click', (event) => {
+    if (event.target === dialog) dialog.close();
+  });
+  dialog.addEventListener('close', () => {
+    document.body.classList.remove('dialog-open');
+    dialogTrigger?.focus();
+    dialogTrigger = null;
+  });
+  dialog.querySelectorAll('[data-close-dialog]').forEach((control) => {
+    control.addEventListener('click', () => {
+      const target = control.dataset.scrollTarget;
+      dialog.close();
+      if (target) document.querySelector(target)?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+});
+document.addEventListener('keydown', (event) => {
+  if (event.key === 'Escape') document.querySelector('.story-dialog[open]')?.close();
+});
+}
